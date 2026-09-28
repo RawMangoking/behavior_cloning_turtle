@@ -1,0 +1,6 @@
+ros/build/
+ros/install/
+ros/log/
+ros/data/demos.csv
+__pycache__/
+*.pyc
