@@ -1,31 +1,37 @@
-Behavior cloning on turtlesim contoled using ROS 2 and trained using PyTorch
+# bc_tb3: behavior cloning with LiDAR obstacle avoidance
 
-Imitation learning pipeline in ROS 2 Jazzy
+Same pipeline as `bc_turtle`, now on a TurtleBot3 in Gazebo with a 2D LiDAR and
+random obstacles. Every episode is a new random layout (obstacles, start, goal).
 
-
-1. expert.py - proportional controller  Also records demonstrations to a CSV.
-2. Recording - inputs are distance to goal and heading error . Labels are the
-   expert's clean commands; the executed commands get Gaussian noise so
-   the data covers off-path states.
-3. train.py - MLP, MSE loss, normalized
-   inputs and outputs, 90/10 train/validation split.
-
-## Results so far
-
-- 300 goals recorded, 15,183 samples
-- Validation loss 0.0002 (normalized units) after 100 epochs
-
-
-Deploying the learned policy as a ROS 2 node and comparing it against
-the expert (success rate, time to goal) is the next step. Validation
-loss only measures agreement on recorded states, so it does not yet say
-how well the network actually drives.
+1. `expert` is a gap-following controller (steers to the free direction closest to the goal,
+   with a short-range safety push away from obstacles). It records
+   demos to CSV: inputs are 24 LiDAR sectors + distance to goal + heading error, and
+   labels are the expert's clean commands. Executed commands get noise. Only successful
+   episodes are saved.
+2. `train` is an MLP with MSE loss and normalized inputs and outputs. The validation split is by episode.
+3. `policy` drives with the network. Episode i uses layout seed + i, so the expert
+   and the policy can be compared on identical, unseen layouts.
 
 ## Run
+```bash
+colcon build --packages-select bc_tb3 && source install/setup.bash
+export TURTLEBOT3_MODEL=burger
+ros2 launch bc_tb3 arena.launch.py            # terminal 1 (gui:=false for faster)
 
-Needs ROS 2 Jazzy with turtlesim and PyTorch (the CPU build is enough).
-Paths assume the workspace is mounted at /root/ros2_ws. Start
-turtlesim_node, then:
+# terminal 2
+ros2 topic info /cmd_vel    # if it's Twist (not TwistStamped) add: -p cmd_vel_stamped:=false
 
-    ros2 run bc_turtle expert --ros-args -p record:=true -p noise:=0.3 -p max_goals:=300
-    python3 ros/src/bc_turtle/bc_turtle/train.py
+ros2 run bc_tb3 expert --ros-args -p record:=true -p noise:=0.3 -p episodes:=300 -p seed:=0
+ros2 run bc_tb3 train
+
+# compare on 100 layouts neither has seen (seed 100000+)
+ros2 run bc_tb3 expert --ros-args -p episodes:=100 -p seed:=100000 -p results_csv:=/root/ros2_ws/data/eval_expert.csv
+ros2 run bc_tb3 policy --ros-args -p episodes:=100 -p seed:=100000 -p results_csv:=/root/ros2_ws/data/eval_policy.csv
+```
+Each run prints a summary: success / collision / timeout % and average time and path length.
+
+## Results
+| Controller | Success % | Collision % | Timeout % | Avg time (s) | Avg path (m) |
+|---|---|---|---|---|---|
+| Expert (gap following) | | | | | |
+| Policy (behavior cloning) | | | | | |

@@ -4,3 +4,4 @@ ros/log/
 ros/data/demos.csv
 __pycache__/
 *.pyc
+ros/data/tb3_demos.csv
