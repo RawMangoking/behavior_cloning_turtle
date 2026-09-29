@@ -7,6 +7,7 @@ be tested on exactly the same layouts. Subclasses only implement act().
 import csv
 import math
 import os
+import subprocess
 
 import numpy as np
 from geometry_msgs.msg import Twist, TwistStamped
@@ -49,6 +50,7 @@ class ArenaDriver(Node):
         self.create_subscription(Odometry, '/odom', self.on_odom, 10)
 
         self.odom = None
+        self.layout_failures = 0
         self.episode = 0
         self.stats = {'success': 0, 'collision': 0, 'timeout': 0}
         self.success_times, self.success_paths = [], []
@@ -84,7 +86,17 @@ class ArenaDriver(Node):
         obstacles, start, goal = arena.sample_layout(rng, self.n_obstacles)
         yaw = float(rng.uniform(-math.pi, math.pi))
         self.send(0.0, 0.0)
-        arena.apply_layout(self.world, self.robot, obstacles, start, yaw)
+        try:
+            arena.apply_layout(self.world, self.robot, obstacles, start, yaw)
+        except (RuntimeError, subprocess.TimeoutExpired) as e:
+            # Gazebo was slow to answer: stay in 'start' and retry the same
+            # layout on the next scan instead of crashing a long recording.
+            self.layout_failures += 1
+            if self.layout_failures >= 20:
+                raise RuntimeError('Gazebo stopped answering. Is it still running?') from e
+            self.get_logger().warn(f'Layout call failed ({self.layout_failures}/20), retrying')
+            return
+        self.layout_failures = 0
         self.start_pose = (float(start[0]), float(start[1]), yaw)
         self.goal = (float(goal[0]), float(goal[1]))
         self.settle = 3

@@ -46,8 +46,8 @@ def move_models(world, poses):
     res = subprocess.run(
         ['gz', 'service', '-s', f'/world/{world}/set_pose_vector',
          '--reqtype', 'gz.msgs.Pose_V', '--reptype', 'gz.msgs.Boolean',
-         '--timeout', '3000', '--req', ' '.join(parts)],
-        capture_output=True, text=True, timeout=10)
+         '--timeout', '5000', '--req', ' '.join(parts)],
+        capture_output=True, text=True, timeout=15)
     if 'true' not in res.stdout:
         raise RuntimeError(f'set_pose_vector failed: {res.stdout} {res.stderr}')
 
