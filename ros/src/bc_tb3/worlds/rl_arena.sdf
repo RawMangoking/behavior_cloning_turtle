@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<sdf version="1.8">
+  <world name="rl_arena">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>  <!-- raise this to train faster -->
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows><pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse><specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane"><static>true</static><link name="link">
+      <collision name="col"><geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry></collision>
+      <visual name="vis"><geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        <material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material>
+      </visual>
+    </link></model>
+
+    <model name="walls"><static>true</static><link name="link">
+      
+      <collision name="n_col"><pose>0 2.05 0.25 0 0 0</pose><geometry><box><size>4.2 0.1 0.5</size></box></geometry></collision>
+      <visual name="n_vis"><pose>0 2.05 0.25 0 0 0</pose><geometry><box><size>4.2 0.1 0.5</size></box></geometry>
+        <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      <collision name="s_col"><pose>0 -2.05 0.25 0 0 0</pose><geometry><box><size>4.2 0.1 0.5</size></box></geometry></collision>
+      <visual name="s_vis"><pose>0 -2.05 0.25 0 0 0</pose><geometry><box><size>4.2 0.1 0.5</size></box></geometry>
+        <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      
+      <collision name="e_col"><pose>2.05 0 0.25 0 0 0</pose><geometry><box><size>0.1 4.2 0.5</size></box></geometry></collision>
+      <visual name="e_vis"><pose>2.05 0 0.25 0 0 0</pose><geometry><box><size>0.1 4.2 0.5</size></box></geometry>
+        <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      <collision name="w_col"><pose>-2.05 0 0.25 0 0 0</pose><geometry><box><size>0.1 4.2 0.5</size></box></geometry></collision>
+      <visual name="w_vis"><pose>-2.05 0 0.25 0 0 0</pose><geometry><box><size>0.1 4.2 0.5</size></box></geometry>
+        <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+    </link></model>
+
+    <model name="obstacle_0">
+      <pose>20 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_1">
+      <pose>22 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_2">
+      <pose>24 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_3">
+      <pose>26 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_4">
+      <pose>28 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_5">
+      <pose>30 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_6">
+      <pose>32 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_7">
+      <pose>34 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_8">
+      <pose>36 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_9">
+      <pose>38 20 0.25 0 0 0</pose>
+      <link name="link">
+        <inertial><mass>10.0</mass><inertia><ixx>0.2646</ixx><iyy>0.2646</iyy>
+          <izz>0.1125</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+        <collision name="col"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="vis"><geometry><cylinder><radius>0.15</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.1 1</ambient><diffuse>0.9 0.4 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
