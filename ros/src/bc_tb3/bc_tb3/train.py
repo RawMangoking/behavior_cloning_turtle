@@ -49,12 +49,15 @@ def main():
     for epoch in range(1, a.epochs + 1):
         model.train()
         perm = torch.randperm(len(Xt))
+        total = 0.0
         for i in range(0, len(Xt), 256):
             b = perm[i:i + 256]
             opt.zero_grad()
             loss = loss_fn(model(Xt[b]), Yt[b])
             loss.backward()
             opt.step()
+            total += loss.item() * len(b)
+        train_loss = total / len(Xt)   # average over the whole epoch
         model.eval()
         with torch.no_grad():
             val = loss_fn(model(Xv), Yv).item()
@@ -62,7 +65,7 @@ def main():
             best_val = val
             best_state = {k: v.clone() for k, v in model.state_dict().items()}
         if epoch % 10 == 0:
-            print(f'epoch {epoch:3d}  train {loss.item():.4f}  val {val:.4f}')
+            print(f'epoch {epoch:3d}  train {train_loss:.4f}  val {val:.4f}')
 
     torch.save({
         'model': best_state,
