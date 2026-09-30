@@ -5,3 +5,6 @@ ros/data/demos.csv
 __pycache__/
 *.pyc
 ros/data/tb3_demos.csv
+ros/data/*demos*.csv
+ros/data/tb3_policy.pt
+ros/data/tb3_policy.pt
