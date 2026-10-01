@@ -31,7 +31,5 @@ ros2 run bc_tb3 policy --ros-args -p episodes:=100 -p seed:=100000 -p results_cs
 Each run prints a summary: success / collision / timeout % and average time and path length.
 
 ## Results
-| Controller | Success % | Collision % | Timeout % | Avg time (s) | Avg path (m) |
-|---|---|---|---|---|---|
-| Expert (gap following) | | | | | |
-| Policy (behavior cloning) | | | | | |
+See the [main README](../../../README.md) for results, findings, and the DAgger and
+relabeling workflow (`policy` with `record:=true`, `relabel`).
