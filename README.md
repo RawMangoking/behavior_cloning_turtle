@@ -9,7 +9,7 @@ tested diagnosis of what limits the learned policy. Every result below comes
 from the same 100 unseen, randomly generated layouts, so all rows are directly
 comparable.
 
-<!-- Add a demo GIF here: record the Gazebo window while the policy drives -->
+[TurtleBot3 driving around obstacles with the DAgger policy (3× speed)] (media/demo.gif)
 
 ## Results
 

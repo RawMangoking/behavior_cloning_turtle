@@ -1,0 +1,19 @@
+=== 18:35 DAgger iteration 3 (seed 400000)
+[INFO] [1790797041.235673946] [policy]: Finished 100 episodes: success 79.0%  collision 8.0%  timeout 13.0%  | successful runs: avg 13.3 s, 2.30 m
+550 episodes: 34044 train rows, 4087 val rows
+saved /root/ros2_ws/data/tb3_policy.pt (best val 0.3997)
+--- test on fixed layouts (seed 100000):
+[INFO] [1790801571.506500960] [policy]: Finished 100 episodes: success 72.0%  collision 9.0%  timeout 19.0%  | successful runs: avg 14.4 s, 2.49 m
+=== 20:52 DAgger iteration 4 (seed 500000)
+[INFO] [1790805773.699111130] [policy]: Finished 100 episodes: success 74.0%  collision 8.0%  timeout 18.0%  | successful runs: avg 13.0 s, 2.25 m
+650 episodes: 41989 train rows, 4199 val rows
+saved /root/ros2_ws/data/tb3_policy.pt (best val 0.3543)
+--- test on fixed layouts (seed 100000):
+[INFO] [1790809923.415660260] [policy]: Finished 100 episodes: success 72.0%  collision 13.0%  timeout 15.0%  | successful runs: avg 13.7 s, 2.43 m
+=== 23:12 DAgger iteration 5 (seed 600000)
+[INFO] [1790814010.930514820] [policy]: Finished 100 episodes: success 77.0%  collision 9.0%  timeout 14.0%  | successful runs: avg 13.4 s, 2.41 m
+750 episodes: 49037 train rows, 4979 val rows
+saved /root/ros2_ws/data/tb3_policy.pt (best val 0.3369)
+--- test on fixed layouts (seed 100000):
+[INFO] [1790818459.969928047] [policy]: Finished 100 episodes: success 63.0%  collision 15.0%  timeout 22.0%  | successful runs: avg 13.3 s, 2.36 m
+=== 01:34 all done

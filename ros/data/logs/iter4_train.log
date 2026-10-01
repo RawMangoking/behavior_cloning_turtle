@@ -1,0 +1,12 @@
+650 episodes: 41989 train rows, 4199 val rows
+epoch  10  train 0.2806  val 0.4043
+epoch  20  train 0.2276  val 0.3692
+epoch  30  train 0.1942  val 0.3831
+epoch  40  train 0.1843  val 0.3677
+epoch  50  train 0.1662  val 0.4063
+epoch  60  train 0.1554  val 0.3941
+epoch  70  train 0.1517  val 0.3813
+epoch  80  train 0.1371  val 0.3744
+epoch  90  train 0.1375  val 0.3914
+epoch 100  train 0.1260  val 0.4080
+saved /root/ros2_ws/data/tb3_policy.pt (best val 0.3543)
