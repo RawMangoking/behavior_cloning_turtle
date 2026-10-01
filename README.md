@@ -9,9 +9,11 @@ tested diagnosis of what limits the learned policy. Every result below comes
 from the same 100 unseen, randomly generated layouts, so all rows are directly
 comparable.
 
-[TurtleBot3 driving around obstacles with the DAgger policy (3× speed)] (media/demo.gif)
+![TurtleBot3 driving around obstacles with the DAgger policy (3× speed)](media/demo.gif)
 
 ## Results
+
+![Outcomes on the test layouts](media/outcomes.png)
 
 Test set: 100 random layouts (6 obstacles, random start and goal), never used
 for training. Episode ends on reaching the goal (within 0.25 m), a collision
@@ -50,6 +52,8 @@ every iteration, from 0.53 (BC) to 0.34 (DAgger 5), while closed-loop success
 did not improve. Matching the expert's labels more closely did not mean
 driving better. Only closed-loop tests in the simulator measure that.
 
+![DAgger progression vs validation loss](media/dagger.png)
+
 **4. The remaining failures are the network's own hesitation, and the
 expert's memory is not the cause.** Timeouts became the main failure mode
 (20%). Of DAgger 2's 20 timeouts, the expert also failed on only 5 of those
@@ -63,6 +67,8 @@ hypothesis was rejected.
 The likely remaining cause is that the expert's left/right choice flips
 abruptly near decision points, while MSE regression produces a smooth
 average there ("go straight, slowly"), which shows up as hesitation.
+
+![Outcome on every test layout](media/layouts.png)
 
 ## How it works
 
