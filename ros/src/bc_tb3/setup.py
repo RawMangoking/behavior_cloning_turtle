@@ -26,6 +26,7 @@ setup(
             'expert = bc_tb3.expert:main',
             'policy = bc_tb3.policy:main',
             'train = bc_tb3.train:main',
+            'relabel = bc_tb3.relabel:main',
         ],
     },
 )

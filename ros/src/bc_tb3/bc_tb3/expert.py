@@ -66,6 +66,7 @@ class Expert(ArenaDriver):
         self.declare_parameter('record', False)
         self.declare_parameter('noise', 0.0)
         self.declare_parameter('data_path', '/root/ros2_ws/data/tb3_demos.csv')
+        self.declare_parameter('memory', True)   # False = forget previous direction
         self.record = self.get_parameter('record').value
         self.noise = self.get_parameter('noise').value
         self.buffer = []
@@ -83,7 +84,9 @@ class Expert(ArenaDriver):
                 self.writer.writerow(CSV_HEADER)
 
     def act(self, rays, dist, heading_error):
-        v, w, self.prev_target = expert_cmd(rays, dist, heading_error, self.prev_target)
+        v, w, target = expert_cmd(rays, dist, heading_error, self.prev_target)
+        if self.get_parameter('memory').value:
+            self.prev_target = target
         if self.record:   # clean action = label
             self.buffer.append([self.seed + self.episode,
                                 *features(rays, dist, heading_error), v, w])
